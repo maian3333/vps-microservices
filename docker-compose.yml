@@ -13,7 +13,7 @@ services:
     image: nginx:latest
     container_name: nginx
     restart: unless-stopped
-    ports: ["80:80", "443:443"]
+    ports: [ "80:80", "443:443" ]
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
@@ -30,14 +30,14 @@ services:
       <<: *common-variables
       SERVER_NAME: ${GATEWAY_SERVER_NAME:-apigateway}
       SERVER_PORT: ${GATEWAY_PORT:-8080}
-    ports: ["${GATEWAY_PORT:-8080}:8080"]
+    ports: [ "${GATEWAY_PORT:-8080}:8080" ]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${GATEWAY_PORT:-8080}/management/health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:${GATEWAY_PORT:-8080}/management/health" ]
       interval: 5s
       timeout: 5s
       retries: 40
     volumes:
-      - ./config/microservices/:/app/config/:ro   # (đã sửa chính tả)
+      - ./config/microservices/:/app/config/:ro # (đã sửa chính tả)
 
   # =========================
   # MS Route
@@ -53,7 +53,7 @@ services:
       # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
       # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${MS_ROUTE_PORT:-8082}/management/health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:${MS_ROUTE_PORT:-8082}/management/health" ]
       interval: 5s
       timeout: 5s
       retries: 40
@@ -74,7 +74,7 @@ services:
       # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
       # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${MS_USER_PORT:-8083}/management/health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:${MS_USER_PORT:-8083}/management/health" ]
       interval: 5s
       timeout: 5s
       retries: 40
@@ -95,51 +95,71 @@ services:
       # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
       # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${MS_BOOKING_PORT:-8084}/management/health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:${MS_BOOKING_PORT:-8084}/management/health" ]
       interval: 5s
       timeout: 5s
       retries: 40
     volumes:
       - ./config/microservices/:/app/config/:ro
-
+  
+  # =========================
+  # MS Promotion
+  # =========================
+  ms_promotion:
+    image: ms_promotion
+    environment:
+      <<: *common-variables
+      SERVER_NAME: ${MS_PROMOTION_SERVER_NAME:-mspromotion}
+      SERVER_PORT: ${MS_PROMOTION_PORT:-8085}
+      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_PROMOTION_DB_PORT:-3310}/ms_promotion?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_PROMOTION_DB_PORT:-3310}/ms_promotion?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
+      # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:${MS_PAYMENT_PORT:-8085}/management/health" ]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+    volumes:
+      - ./config/microservices/:/app/config/:ro
   # =========================
   # MS Payment
   # =========================
-  ms_payment:
-    image: ms_payment
-    environment:
-      <<: *common-variables
-      SERVER_NAME: ${MS_PAYMENT_SERVER_NAME:-mspayment}
-      SERVER_PORT: ${MS_PAYMENT_PORT:-8085}
-      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_PAYMENT_DB_PORT:-3310}/ms_payment?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_PAYMENT_DB_PORT:-3310}/ms_payment?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-      # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
-      # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${MS_PAYMENT_PORT:-8085}/management/health"]
-      interval: 5s
-      timeout: 5s
-      retries: 40
-    volumes:
-      - ./config/microservices/:/app/config/:ro
+  # ms_payment:
+  #   image: ms_payment
+  #   environment:
+  #     <<: *common-variables
+  #     SERVER_NAME: ${MS_PAYMENT_SERVER_NAME:-mspayment}
+  #     SERVER_PORT: ${MS_PAYMENT_PORT:-8085}
+  #     SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_PAYMENT_DB_PORT:-3310}/ms_payment?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+  #     SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_PAYMENT_DB_PORT:-3310}/ms_payment?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+  #     # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
+  #     # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:${MS_PAYMENT_PORT:-8085}/management/health"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 40
+  #   volumes:
+  #     - ./config/microservices/:/app/config/:ro
 
-  # =========================
-  # MS Notification
-  # =========================
-  ms_notification:
-    image: ms_notification
-    environment:
-      <<: *common-variables
-      SERVER_NAME: ${MS_NOTIFICATION_SERVER_NAME:-msnotification}
-      SERVER_PORT: ${MS_NOTIFICATION_PORT:-8086}
-      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_NOTIFICATION_DB_PORT:-3311}/ms_notification?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_NOTIFICATION_DB_PORT:-3311}/ms_notification?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-      # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
-      # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${MS_NOTIFICATION_PORT:-8086}/management/health"]
-      interval: 5s
-      timeout: 5s
-      retries: 40
-    volumes:
-      - ./config/microservices/:/app/config/:ro
+  # # =========================
+  # # MS Notification
+  # # =========================
+  # ms_notification:
+  #   image: ms_notification
+  #   environment:
+  #     <<: *common-variables
+  #     SERVER_NAME: ${MS_NOTIFICATION_SERVER_NAME:-msnotification}
+  #     SERVER_PORT: ${MS_NOTIFICATION_PORT:-8086}
+  #     SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_NOTIFICATION_DB_PORT:-3311}/ms_notification?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+  #     SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_NOTIFICATION_DB_PORT:-3311}/ms_notification?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+  #     # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
+  #     # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:${MS_NOTIFICATION_PORT:-8086}/management/health"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 40
+  #   volumes:
+  #     - ./config/microservices/:/app/config/:ro
