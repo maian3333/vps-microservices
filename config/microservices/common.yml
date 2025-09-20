@@ -66,9 +66,9 @@ spring:
             security.protocol: SSL
             ssl.endpoint.identification.algorithm: ""
             # NOTE: If these JKS files are NOT on the classpath, switch to file: URLs pointing to your mounted path, e.g. file:/app/config/ssl/...
-            ssl.truststore.location: ${KAFKA_TRUSTSTORE_LOCATION:classpath:config/tls/kafka.client.truststore.jks}
+            ssl.truststore.location: ${KAFKA_TRUSTSTORE_LOCATION:file:/app/config/kafka.client.truststore.jks}
             ssl.truststore.password: ${APP_F4_PASS}
-            ssl.keystore.location: ${KAFKA_KEYSTORE_LOCATION:classpath:config/tls/kafka.broker.keystore.jks}
+            ssl.keystore.location: ${KAFKA_KEYSTORE_LOCATION:file:/app/config/kafka.broker.keystore.jks}
             ssl.keystore.password: ${APP_F4_PASS}
             ssl.key.password: ${APP_F4_PASS}
 
