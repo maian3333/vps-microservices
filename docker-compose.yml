@@ -7,6 +7,8 @@ x-common-variables: &common-variables
     optional:file:/app/config/$${SERVER_NAME}.yml
   DOMAIN: ${DOMAIN}
   APP_F4_PASS: ${APP_F4_PASS}
+  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET: ${KEYCLOAK_SECRET}
+  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID : web_app
 
 services:
   nginx:
