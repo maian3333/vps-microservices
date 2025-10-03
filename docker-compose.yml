@@ -50,8 +50,8 @@ services:
       <<: *common-variables
       SERVER_NAME: ${MS_ROUTE_SERVER_NAME:-msroute}
       SERVER_PORT: ${MS_ROUTE_PORT:-8082}
-      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_ROUTE_DB_PORT:-3307}/ms_route?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_ROUTE_DB_PORT:-3307}/ms_route?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_ROUTE_DB_PORT:-3307}/ms_route?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
+      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_ROUTE_DB_PORT:-3307}/ms_route?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
       # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
       # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
     healthcheck:
@@ -71,8 +71,8 @@ services:
       <<: *common-variables
       SERVER_NAME: ${MS_USER_SERVER_NAME:-msuser}
       SERVER_PORT: ${MS_USER_PORT:-8083}
-      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_USER_DB_PORT:-3308}/ms_user?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_USER_DB_PORT:-3308}/ms_user?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_USER_DB_PORT:-3308}/ms_user?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
+      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_USER_DB_PORT:-3308}/ms_user?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
       # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
       # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
     healthcheck:
@@ -92,8 +92,8 @@ services:
       <<: *common-variables
       SERVER_NAME: ${MS_BOOKING_SERVER_NAME:-msbooking}
       SERVER_PORT: ${MS_BOOKING_PORT:-8084}
-      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_BOOKING_DB_PORT:-3309}/ms_booking?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_BOOKING_DB_PORT:-3309}/ms_booking?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_BOOKING_DB_PORT:-3309}/ms_booking?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
+      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_BOOKING_DB_PORT:-3309}/ms_booking?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
       # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
       # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
     healthcheck:
@@ -113,8 +113,8 @@ services:
       <<: *common-variables
       SERVER_NAME: ${MS_PROMOTION_SERVER_NAME:-mspromotion}
       SERVER_PORT: ${MS_PROMOTION_PORT:-8085}
-      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_PROMOTION_DB_PORT:-3310}/ms_promotion?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_PROMOTION_DB_PORT:-3310}/ms_promotion?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_PROMOTION_DB_PORT:-3310}/ms_promotion?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
+      SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_PROMOTION_DB_PORT:-3310}/ms_promotion?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
       # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
       # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
     healthcheck:
@@ -133,8 +133,8 @@ services:
   #     <<: *common-variables
   #     SERVER_NAME: ${MS_PAYMENT_SERVER_NAME:-mspayment}
   #     SERVER_PORT: ${MS_PAYMENT_PORT:-8085}
-  #     SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_PAYMENT_DB_PORT:-3310}/ms_payment?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-  #     SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_PAYMENT_DB_PORT:-3310}/ms_payment?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+  #     SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_PAYMENT_DB_PORT:-3310}/ms_payment?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
+  #     SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_PAYMENT_DB_PORT:-3310}/ms_payment?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
   #     # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
   #     # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
   #   healthcheck:
@@ -154,8 +154,8 @@ services:
   #     <<: *common-variables
   #     SERVER_NAME: ${MS_NOTIFICATION_SERVER_NAME:-msnotification}
   #     SERVER_PORT: ${MS_NOTIFICATION_PORT:-8086}
-  #     SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_NOTIFICATION_DB_PORT:-3311}/ms_notification?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-  #     SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_NOTIFICATION_DB_PORT:-3311}/ms_notification?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+  #     SPRING_DATASOURCE_URL: jdbc:mysql://${SQL_HOST}:${MS_NOTIFICATION_DB_PORT:-3311}/ms_notification?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
+  #     SPRING_LIQUIBASE_URL: jdbc:mysql://${SQL_HOST}:${MS_NOTIFICATION_DB_PORT:-3311}/ms_notification?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&allowLoadLocalInfile=true
   #     # SPRING_DATASOURCE_USERNAME: ${SQL_USERNAME}
   #     # SPRING_DATASOURCE_PASSWORD: ${SQL_PASSWORD}
   #   healthcheck:
