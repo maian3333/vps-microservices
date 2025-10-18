@@ -134,7 +134,7 @@ spring:
       discovery:
         enabled: true
         service-name: ${SERVER_NAME}
-        prefer-ip-address: true
+        # prefer-ip-address: true
         ip-address: ${SERVER_NAME}.microservices.${DOMAIN}
         port: 443
         instance-id: ${SERVER_NAME} 
@@ -149,7 +149,12 @@ spring:
 
         # ACL token for discovery
         # acl-token: ${CONSUL_HTTP_TOKEN:}
-
+  data:
+    redis:
+      host: ${REDIS_HOST:${DOMAIN}}       # appf4s.io.vn
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:${APP_F4_PASS}}  # f4security
+      timeout: 3000
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     username: root
@@ -247,3 +252,26 @@ jhipster:
       host: ${LOGSTASH_HOST:${DOMAIN}}
       port: ${LOGSTASH_PORT:5000}
       ring-buffer-size: 512
+
+ridehub:
+  services:
+    booking: msbooking
+    promotion: mspromotion
+    user: msuser
+    route: msroute
+    ticket: msticket
+  feign:
+    scans:
+      - basePackage: com.ridehub.msbooking.client.api
+        serviceId: ${ridehub.services.booking}
+      - basePackage: com.ridehub.mspromotion.client.api
+        serviceId: ${ridehub.services.promotion}
+      - basePackage: com.ridehub.msuser.client.api
+        serviceId: ${ridehub.services.user}
+      - basePackage: com.ridehub.msroute.client.api
+        serviceId: ${ridehub.services.route}
+  s2s:
+    token-url: https://keycloak.${tunnel.vps-host}/realms/jhipster/protocol/openid-connect/token
+    client-id: svc-admin-bootstrap
+    client-secret: EB4eohc7BEY3tw1Rjg7FS8xMLfi95n0n
+    scope:
