@@ -14,9 +14,7 @@
 # ===================================================================
 
 spring:
-  config:
-    # Import shared config first
-    import: optional:file:app/config/common.yml
+
     # Then service-specific config (will override shared)
 jhipster:
   # By default CORS is disabled. Uncomment to enable.

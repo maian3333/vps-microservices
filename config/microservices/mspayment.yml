@@ -15,9 +15,7 @@
 
 
 spring:
-  config:
-    # Import shared config first
-    import: optional:file:app/config/common.yml
+
     # Then service-specific config (will override shared)
   # ===================================================================
   # DEV profile - fixed and tidied

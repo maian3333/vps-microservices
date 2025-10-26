@@ -19,9 +19,7 @@ spring:
     properties:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.use_query_cache: false
-  config:
-    # Import shared config first
-    import: optional:file:app/config/common.yml
+
     # Then service-specific config (will override shared)
   # ===================================================================
   # DEV profile - fixed and tidied
@@ -90,7 +88,7 @@ vnpay:
   pay-url: ${VNPAY_PAY_URL:https://sandbox.vnpayment.vn/paymentv2/vpcpay.html}
   query-url: ${VNPAY_QUERY_URL:https://sandbox.vnpayment.vn/merchant_webapi/api/transaction}
   refund-url: ${VNPAY_REFUND_URL:https://sandbox.vnpayment.vn/merchant_webapi/api/transaction}
-  return-url: ${VNPAY_RETURN_URL:https://apigateway.microservices.appf4s.io.vn/services/msbookingdev/api/payment/vnpay/callback}
+  return-url: ${VNPAY_RETURN_URL:https://apigateway.microservices.appf4s.io.vn/services/msbooking/api/payment/vnpay/callback}
   version: 2.1.0
   command: pay
   order-type: other
