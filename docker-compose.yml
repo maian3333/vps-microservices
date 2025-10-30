@@ -37,9 +37,6 @@ x-mysql-common: &mysql_common
 x-common-variables: &common-variables
   SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod,api-docs}
   JAVA_OPTIONS: ${JAVA_OPTIONS:-"-Xmx512m -Xms256m"}
-  SPRING_CONFIG_IMPORT: >
-    optional:file:/app/config/$${SERVER_NAME}.yml
-  APP_F4_PASS: ${APP_F4_PASS}
 
 services:
   # ===== Auto-heal (restart unhealthy containers) =====
