@@ -3,7 +3,8 @@ version: '3.8'
 # ===== Networks & Volumes =====
 networks:
   ticket_net:
-    name: ticket_net
+    external: true
+    name: ridehub-network
 
 # ===== Common anchors =====
 x-mysql-env: &mysql_env
@@ -37,7 +38,8 @@ x-mysql-common: &mysql_common
 x-common-variables: &common-variables
   SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod,api-docs}
   JAVA_OPTIONS: ${JAVA_OPTIONS:-"-Xmx512m -Xms256m"}
-
+  F4_PASSWORD: ${APP_F4_PASS}
+  DOMAIN: ${DOMAIN}
 services:
   # ===== Auto-heal (restart unhealthy containers) =====
   autoheal:
@@ -89,6 +91,7 @@ services:
       <<: *common-variables
       SERVER_NAME: ${GATEWAY_SERVER_NAME:-apigateway}
       SERVER_PORT: ${GATEWAY_PORT:-8080}
+
     ports: [ "${GATEWAY_PORT:-8080}:8080" ]
     healthcheck:
       test: [ "CMD", "curl", "-fsS", "http://localhost:${GATEWAY_PORT:-8080}/management/health" ]
@@ -202,23 +205,23 @@ services:
       ms_booking-mysql: { condition: service_healthy }
       ms_promotion: { condition: service_healthy } # chain: after promotion
 
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    restart: unless-stopped
-    networks: [ ticket_net ]
-    ports: [ "80:80", "443:443" ]
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./nginx/letsencrypt:/etc/letsencrypt
-      - ./nginx/www:/var/www/html
-      - ./nginx/log:/var/log/nginx
-    depends_on:
-      gateway: { condition: service_healthy }
-      # ms_booking:  { condition: service_healthy }          # last in chain
-    labels:
-      - autoheal=true
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx
+  #   restart: unless-stopped
+  #   networks: [ ticket_net ]
+  #   ports: [ "80:80", "443:443" ]
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/conf.d:/etc/nginx/conf.d:ro
+  #     - ./nginx/letsencrypt:/etc/letsencrypt
+  #     - ./nginx/www:/var/www/html
+  #     - ./nginx/log:/var/log/nginx
+  #   depends_on:
+  #     gateway: { condition: service_healthy }
+  #     # ms_booking:  { condition: service_healthy }          # last in chain
+  #   labels:
+  #     - autoheal=true
 
   docker_api:
     image: tecnativa/docker-socket-proxy:latest
@@ -227,7 +230,7 @@ services:
     environment:
       CONTAINERS: 1 # Cho phép list containers
       POST: 1 # Cho phép POST requests
-      EXEC : 1
+      EXEC: 1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels: [ "autoheal=true" ]

@@ -4,8 +4,8 @@ docker run -it --rm \
   certbot/dns-cloudflare certonly \
   --dns-cloudflare \
   --dns-cloudflare-credentials /cloudflare.ini \
-  -d '*.microservices.appf4s.io.vn' \
-  -d microservices.appf4s.io.vn \
+  -d '*.microservices.appf4.io.vn' \
+  -d microservices.appf4.io.vn \
   --email shegga9x@gmail.com \
   --agree-tos \
   --non-interactive
