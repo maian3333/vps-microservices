@@ -4,13 +4,23 @@ docker run -it --rm \
   certbot/dns-cloudflare certonly \
   --dns-cloudflare \
   --dns-cloudflare-credentials /cloudflare.ini \
-  -d '*.microservices.appf4.io.vn' \
-  -d microservices.appf4.io.vn \
+  -d '*.phungvip.io.vn' \
+  -d phungvip.io.vn \
   --email shegga9x@gmail.com \
   --agree-tos \
   --non-interactive
+# ==============================================================================
+# HƯỚNG DẪN BUILD & TRIỂN KHAI VPS-MICROSERVICES
+# ==============================================================================
 
+# Build Docker images cho toàn bộ microservices (chạy từ thư mục gốc backend/):
 cd backend
 for dir in ms_* gateway; do (cd "$dir" && ./mvnw -Pprod verify jib:dockerBuild -DskipTests -T 1); done
 ./mvnw -Pprod verify jib:dockerBuild -DskipTests
+for dir in ms_* gateway; do
+  (cd "$dir" && ./mvnw -Pprod verify jib:dockerBuild -DskipTests -T 1)
+done
 
+# Khởi chạy các container microservices:
+cd ../infra/vps-microservices
+docker compose up -d

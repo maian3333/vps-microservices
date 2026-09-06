@@ -19,7 +19,7 @@ This document describes the Nginx reverse proxy configuration for the F4 microse
 ### SSL/HTTPS
 - All HTTP traffic (port 80) is automatically redirected to HTTPS (port 443)
 - SSL certificates are managed through Let's Encrypt
-- Certificate path: `/etc/letsencrypt/live/microservices.appf4.io.vn/`
+- Certificate path: `/etc/letsencrypt/live/phungvip.io.vn/`
 
 ### Common Headers
 All proxied requests include:
@@ -45,18 +45,18 @@ Each service's API is accessible through:
 ## URL Structure
 
 ### Health Check URLs
-- msreel: `https://microservices.appf4.io.vn/msreel/management/health`
-- MSUser: `https://microservices.appf4.io.vn/msuser/management/health`
-- MSCommentLike: `https://microservices.appf4.io.vn/mscommentlike/management/health`
-- MSNotification: `https://microservices.appf4.io.vn/msnotification/management/health`
-- MSFeed: `https://microservices.appf4.io.vn/msfeed/management/health`
+- msreel: `https://phungvip.io.vn/msreel/management/health`
+- MSUser: `https://phungvip.io.vn/msuser/management/health`
+- MSCommentLike: `https://phungvip.io.vn/mscommentlike/management/health`
+- MSNotification: `https://phungvip.io.vn/msnotification/management/health`
+- MSFeed: `https://phungvip.io.vn/msfeed/management/health`
 
 ### API URLs
-- msreel: `https://microservices.appf4.io.vn/services/msreel/api/*`
-- MSUser: `https://microservices.appf4.io.vn/services/msuser/api/*`
-- MSCommentLike: `https://microservices.appf4.io.vn/services/mscommentlike/api/*`
-- MSNotification: `https://microservices.appf4.io.vn/services/msnotification/api/*`
-- MSFeed: `https://microservices.appf4.io.vn/services/msfeed/api/*`
+- msreel: `https://phungvip.io.vn/services/msreel/api/*`
+- MSUser: `https://phungvip.io.vn/services/msuser/api/*`
+- MSCommentLike: `https://phungvip.io.vn/services/mscommentlike/api/*`
+- MSNotification: `https://phungvip.io.vn/services/msnotification/api/*`
+- MSFeed: `https://phungvip.io.vn/services/msfeed/api/*`
 
 ## Security Features
 1. HTTPS enforcement

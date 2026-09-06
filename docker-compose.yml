@@ -8,7 +8,7 @@ networks:
 
 # ===== Common anchors =====
 x-mysql-env: &mysql_env
-  MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-${APP_F4_PASS}}
   TZ: "Asia/Ho_Chi_Minh"
 
 x-mysql-common: &mysql_common
@@ -27,7 +27,7 @@ x-mysql-common: &mysql_common
       --explicit_defaults_for_timestamp
       --local-infile=1
   healthcheck:
-    test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot --silent" ]
+    test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$${MYSQL_ROOT_PASSWORD:-$${APP_F4_PASS}}\" --silent || mysqladmin ping -h 127.0.0.1 -uroot --silent" ]
     interval: 5s
     timeout: 5s
     retries: 20
@@ -59,28 +59,28 @@ services:
     environment:
       <<: *mysql_env
       MYSQL_DATABASE: ms_route
-    ports: [ "${MS_ROUTE_DB_PORT:-3307}:3306" ]
+    ports: [ "127.0.0.1:${MS_ROUTE_DB_PORT:-3307}:3306" ]
 
   ms_user-mysql:
     <<: *mysql_common
     environment:
       <<: *mysql_env
       MYSQL_DATABASE: ms_user
-    ports: [ "${MS_USER_DB_PORT:-3308}:3306" ]
+    ports: [ "127.0.0.1:${MS_USER_DB_PORT:-3308}:3306" ]
 
   ms_booking-mysql:
     <<: *mysql_common
     environment:
       <<: *mysql_env
       MYSQL_DATABASE: ms_booking
-    ports: [ "${MS_BOOKING_DB_PORT:-3309}:3306" ]
+    ports: [ "127.0.0.1:${MS_BOOKING_DB_PORT:-3309}:3306" ]
 
   ms_promotion-mysql:
     <<: *mysql_common
     environment:
       <<: *mysql_env
       MYSQL_DATABASE: ms_promotion
-    ports: [ "${MS_PROMOTION_DB_PORT:-3310}:3306" ]
+    ports: [ "127.0.0.1:${MS_PROMOTION_DB_PORT:-3310}:3306" ]
 
   # ===== Microservices & Nginx =====
   gateway:
